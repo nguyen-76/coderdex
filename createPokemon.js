@@ -1,11 +1,13 @@
 const fs = require("fs");
 const csv = require("csvtojson");
 require("dotenv").config();
-const mainUrl = process.env.MAIN_URL || "https://pokedex-api-fx8z.onrender.com";
 
-const PokemonsData = async () => {
+const createPokemon = async () => {
   let newData = await csv().fromFile("pokemon.csv");
   let data = JSON.parse(fs.readFileSync("db.json"));
+  newData = new Set(newData);
+  newData = Array.from(newData);
+  newData = newData.slice(0, 721);
   const pokemonsList = [];
 
   newData.forEach((pokemon, index) => {
@@ -18,14 +20,11 @@ const PokemonsData = async () => {
       id: index + 1,
       name: pokemon.Name,
       types: type,
-      url: `${mainUrl}/pokemon_icons/images/${pokemon.Name}.png`,
+      url: `http://localhost:8000/images/${index + 1}.png`,
     });
   });
   data.pokemons = pokemonsList;
   data.totalPokemons = data.pokemons.length;
-  data = JSON.stringify(data);
-  fs.writeFileSync("db.json", data);
-
-  //
+  fs.writeFileSync("db.json", JSON.stringify(data));
 };
-PokemonsData();
+createPokemon();
