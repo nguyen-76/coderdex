@@ -20,7 +20,7 @@ const createPokemon = async () => {
       id: index + 1,
       name: pokemon.Name,
       types: type,
-      url: `http://localhost:8000/images/${index + 1}.png`,
+      url: `https://coderdex-production.up.railway.app/images/${pokemon.Name}.png`,
     });
   });
   data.pokemons = pokemonsList;
