@@ -7,6 +7,6 @@ router.get("/", function (req, res, next) {
 });
 
 const pokemonRouter = require("./pokemon.js");
-router.use("/pokemon", pokemonRouter);
+router.use("/pokemons", pokemonRouter);
 
 module.exports = router;
